@@ -9,9 +9,9 @@ public class MainManager : MonoBehaviour
 
     public enum CarTypes
     {
-        Car = 0,
-        Ambulance = 1,
-        Van = 2,
+        Sedan = 0,
+        Van = 1,
+        Ambulance = 2,
         PoliceCar = 3
     }
 
