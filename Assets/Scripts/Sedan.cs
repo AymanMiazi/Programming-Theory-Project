@@ -1,25 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sedan : CarController
 {
 
     [SerializeField] private GameObject trail;
-    private bool isTrailActive = false;
+    private bool _isTrailActive;
     
     protected override void ActivateSpecial()
     {
-        if(!isTrailActive)
+        if(!_isTrailActive)
         {
             trail.SetActive(true);
-            isTrailActive = true;
+            _isTrailActive = true;
         }
         else
         {
             trail.SetActive(false);
-            isTrailActive = false;
+            _isTrailActive = false;
         }
     }
     private void Update()

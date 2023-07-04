@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ChooseCar : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TextMeshProUGUI playingAsText;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (MainManager.Instance != null)
+        {
+            foreach (Transform child in transform)
+            {
+                if (child.gameObject.GetComponent<CarController>().type == MainManager.Instance.carTypes)
+                {
+                    child.gameObject.SetActive(true);
+                    playingAsText.SetText($"Playing As: {MainManager.Instance.carTypes}");
+                }
+            }
+        }
     }
 }

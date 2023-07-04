@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +10,11 @@ public class UIHandler : MonoBehaviour
 
     public void ChooseCar(int choice)
     {
-        MainManager.Instance.carTypes = (MainManager.CarTypes)choice;
+        MainManager.Instance.carTypes = (CarTypes)choice;
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

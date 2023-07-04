@@ -1,18 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PoliceCar : MonoBehaviour
+public class PoliceCar : CarController
 {
-    // Start is called before the first frame update
-    void Start()
+    private AudioSource _audioSource;
+
+    private bool _isSirenActive;
+    protected override void ActivateSpecial()
     {
-        
+        if (!_isSirenActive)
+        {
+            _audioSource.Play();
+            _isSirenActive = true;
+        }
+        else
+        {
+            _audioSource.Stop();
+            _isSirenActive = false;
+        }
+    }
+
+    private void Start()
+    {
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ActivateSpecial();
+        }
     }
 }

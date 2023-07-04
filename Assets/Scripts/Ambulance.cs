@@ -1,18 +1,51 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Ambulance : MonoBehaviour
+public class Ambulance : CarController
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private GameObject redLight;
+    [SerializeField] private GameObject blueLight;
+    [SerializeField] private float waitTime = 0.5f;
+
+    private bool _isLightsOn;
+    protected override void ActivateSpecial()
     {
-        
+        _isLightsOn = !_isLightsOn;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ActivateSpecial();
+        }
+    }
+
+    private void Start()
+    {
+        StartCoroutine(FlashLights());
+    }
+
+    IEnumerator FlashLights()
+    {
+        while (_isLightsOn)
+        {
+            redLight.SetActive(true);
+            blueLight.SetActive(false);
+            yield return new WaitForSeconds(waitTime);
+            redLight.SetActive(false);
+            blueLight.SetActive(true);
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        if (!_isLightsOn)
+        {
+            redLight.SetActive(false);
+            blueLight.SetActive(false);
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        StartCoroutine(FlashLights());
     }
 }

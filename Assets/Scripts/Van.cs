@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Van : MonoBehaviour
+public class Van : CarController
 {
-    // Start is called before the first frame update
-    void Start()
+    private bool _isBoostActive;
+    [SerializeField] private ParticleSystem boostParticles;
+
+    [SerializeField] private int boostFactor;
+    protected override void ActivateSpecial()
     {
-        
+        if (!_isBoostActive)
+        {
+            _isBoostActive = true;
+            MaxMotorTorque *= boostFactor;
+            boostParticles.Play();
+        }
+        else
+        {
+            _isBoostActive = false;
+            MaxMotorTorque /= boostFactor;
+            boostParticles.Stop();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ActivateSpecial();
+        }
     }
 }

@@ -1,22 +1,20 @@
-using System;
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 
 public abstract class CarController : MonoBehaviour
 {
-    public List<AxleInfo> axleInfos; // the information about each individual axle
+    [SerializeField] private List<AxleInfo> axleInfos; // the information about each individual axle
     
-    private float m_maxMotorTorque = 600;
-    public float maxMotorTorque
+    private float _maxMotorTorque = 600;
+    protected float MaxMotorTorque
     {
-        get { return m_maxMotorTorque; }
+        get => _maxMotorTorque;
         set
         {
             if (value > 0)
             {
-                m_maxMotorTorque = value;
+                _maxMotorTorque = value;
             }
             else
             {
@@ -25,15 +23,15 @@ public abstract class CarController : MonoBehaviour
         }
     } // maximum torque the motor can apply to wheel
 
-    private float m_maxSteeringAngle = 60;
-    public float maxSteeringAngle // maximum steer angle the wheel can have
+    private float _maxSteeringAngle = 60;
+    protected float MaxSteeringAngle // maximum steer angle the wheel can have
     {
-        get { return m_maxSteeringAngle; }
+        get => _maxSteeringAngle;
         set
         {
             if (value > 0)
             {
-                m_maxSteeringAngle = value;
+                _maxSteeringAngle = value;
             }
             else
             {
@@ -42,27 +40,27 @@ public abstract class CarController : MonoBehaviour
         }
     }
 
-    private float steering;
-    private float motor;
+    private float _steering;
+    private float _motor;
 
-    private Rigidbody playerRb;
-    
-    [SerializeField] private MainManager.CarTypes type;
-    
+    private Rigidbody _playerRb;
+
     [SerializeField] private TextMeshProUGUI speedometerText;
     [SerializeField] private float speed;
+    public CarTypes type;
     
     private void FixedUpdate()
     {
-        motor = maxMotorTorque * Input.GetAxis("Vertical");
-        steering = maxSteeringAngle * Input.GetAxis("Horizontal");
+        _motor = MaxMotorTorque * Input.GetAxis("Vertical");
+        _steering = MaxSteeringAngle * Input.GetAxis("Horizontal");
         WheelPhysics();
         DisplaySpeed();
+        ResetPosition();
     }
 
     private void Awake()
     {
-        playerRb = GetComponent<Rigidbody>();
+        _playerRb = GetComponent<Rigidbody>();
     }
 
     private void WheelPhysics()
@@ -71,25 +69,35 @@ public abstract class CarController : MonoBehaviour
         {
             if (axleInfo.steering)
             {
-                axleInfo.leftWheel.steerAngle = steering;
-                axleInfo.rightWheel.steerAngle = steering;
+                axleInfo.leftWheel.steerAngle = _steering;
+                axleInfo.rightWheel.steerAngle = _steering;
             }
 
             if (axleInfo.motor)
             {
-                axleInfo.leftWheel.motorTorque = motor;
-                axleInfo.rightWheel.motorTorque = motor;
+                axleInfo.leftWheel.motorTorque = _motor;
+                axleInfo.rightWheel.motorTorque = _motor;
             }
         }
     }
 
     private void DisplaySpeed()
     {
-        speed = Mathf.Round(playerRb.velocity.magnitude * 3.6f);
+        speed = Mathf.Round(_playerRb.velocity.magnitude * 3.6f);
         speedometerText.SetText("Speed: " + speed + " km/h");
     }
 
     protected abstract void ActivateSpecial();
+
+    private void ResetPosition()
+    {
+        if (transform.position.y < -10)
+        {
+            transform.position = Vector3.zero;
+            transform.rotation = Quaternion.Euler(0,0,0);
+            _playerRb.velocity = Vector3.zero;
+        } 
+    }
 }
 
 
