@@ -1,11 +1,13 @@
 using UnityEngine;
 
+//INHERITANCE
 public class Sedan : CarController
 {
 
     [SerializeField] private GameObject trail;
     private bool _isTrailActive;
     
+    //POLYMORPHISM
     protected override void ActivateSpecial()
     {
         if(!_isTrailActive)

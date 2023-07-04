@@ -1,10 +1,13 @@
 using UnityEngine;
 
+//INHERITANCE
 public class PoliceCar : CarController
 {
     private AudioSource _audioSource;
 
     private bool _isSirenActive;
+    
+    //POLYMORPHISM
     protected override void ActivateSpecial()
     {
         if (!_isSirenActive)

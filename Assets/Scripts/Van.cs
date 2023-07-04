@@ -1,11 +1,14 @@
 using UnityEngine;
 
+//INHERITANCE
 public class Van : CarController
 {
     private bool _isBoostActive;
     [SerializeField] private ParticleSystem boostParticles;
 
     [SerializeField] private int boostFactor;
+    
+    //POLYMORPHISM
     protected override void ActivateSpecial()
     {
         if (!_isBoostActive)

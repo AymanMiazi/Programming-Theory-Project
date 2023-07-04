@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MainManager : MonoBehaviour
 {
-    public static MainManager Instance { get; private set; }
+    public static MainManager Instance { get; private set; } //ENCAPSULATION
     
     public CarTypes carTypes ;
 

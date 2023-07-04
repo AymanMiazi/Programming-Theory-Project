@@ -7,6 +7,8 @@ public abstract class CarController : MonoBehaviour
     [SerializeField] private List<AxleInfo> axleInfos; // the information about each individual axle
     
     private float _maxMotorTorque = 600;
+    
+    //ENCAPSULATION
     protected float MaxMotorTorque
     {
         get => _maxMotorTorque;
@@ -24,6 +26,8 @@ public abstract class CarController : MonoBehaviour
     } // maximum torque the motor can apply to wheel
 
     private float _maxSteeringAngle = 60;
+    
+    //ENCAPSULATION
     protected float MaxSteeringAngle // maximum steer angle the wheel can have
     {
         get => _maxSteeringAngle;
@@ -63,6 +67,7 @@ public abstract class CarController : MonoBehaviour
         _playerRb = GetComponent<Rigidbody>();
     }
 
+    //ABSTRACTION
     private void WheelPhysics()
     {
         foreach (AxleInfo axleInfo in axleInfos)
@@ -81,14 +86,17 @@ public abstract class CarController : MonoBehaviour
         }
     }
 
+    //ABSTRACTION
     private void DisplaySpeed()
     {
         speed = Mathf.Round(_playerRb.velocity.magnitude * 3.6f);
         speedometerText.SetText("Speed: " + speed + " km/h");
     }
 
+    //POLYMORPHISM
     protected abstract void ActivateSpecial();
 
+    //ABSTRACTION
     private void ResetPosition()
     {
         if (transform.position.y < -10)

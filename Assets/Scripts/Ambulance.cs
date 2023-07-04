@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+//INHERITANCE
 public class Ambulance : CarController
 {
     [SerializeField] private GameObject redLight;
@@ -8,6 +9,8 @@ public class Ambulance : CarController
     [SerializeField] private float waitTime = 0.5f;
 
     private bool _isLightsOn;
+    
+    //POLYMORPHISM
     protected override void ActivateSpecial()
     {
         _isLightsOn = !_isLightsOn;
